@@ -40,6 +40,12 @@
                 android:layout_marginLeft="16dp"
                 tools:text="Publishing date"
                 android:layout_marginBottom="16dp"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/numberId"
+        tools:text="ID: 5"
+        android:layout_marginLeft="16dp"/>
 
     </LinearLayout>
 

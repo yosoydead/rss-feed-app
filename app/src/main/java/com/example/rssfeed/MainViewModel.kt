@@ -30,7 +30,13 @@ class MainViewModel: ViewModel() {
     val data: LiveData<String>
         get() = _data
 
+    private val _songs = MutableLiveData<ArrayList<Song>>()
+    val songs: LiveData<ArrayList<Song>>
+        get() = _songs
+
     init {
+        _songs.value = arrayListOf<Song>()
+
         Log.d("ViewModel", "VIEW MODEL CREATED")
         _show.value = View.VISIBLE
         scope.launch {
@@ -41,6 +47,9 @@ class MainViewModel: ViewModel() {
 //                doStuff()
 //            }
 
+            //Log.d("ViewModel data", "${_data.value}")
+            _songs.value = parseXML(_data.value!!)
+            Log.d("ViewModel new LIST", "${_songs.value}")
             _show.value = View.GONE
         }
     }
@@ -97,15 +106,18 @@ class MainViewModel: ViewModel() {
     }
 
 
-    private fun parseXML(xmlData: String){
+    private fun parseXML(xmlData: String): ArrayList<Song>?{
         var inItem = false
         var textValue = ""
+        var list = arrayListOf<Song>()
 
         try {
             val factory = XmlPullParserFactory.newInstance()
             factory.isNamespaceAware = true
             val xpp = factory.newPullParser()
             xpp.setInput(xmlData.reader())
+
+            var currentItem = Song()
 
             var eventType = xpp.eventType
             while(eventType != XmlPullParser.END_DOCUMENT){
@@ -123,12 +135,14 @@ class MainViewModel: ViewModel() {
                         if(inItem){
                             when(tagName){
                                 "item" -> {
+                                    list?.add(currentItem)
                                     inItem = false
+                                    currentItem = Song()
                                 }
-                                "title" -> Log.d("TITLE", textValue)
+                                "title" -> currentItem.title = textValue//Log.d("TITLE", textValue)
                                 "category" -> Log.d("CATEGORY", textValue)
-                                "description"-> Log.d("DESCRIPTION", textValue)
-                                "pubdate" -> Log.d("PUBDATE", textValue)
+                                "description"-> currentItem.artist = textValue//Log.d("DESCRIPTION", textValue)
+                                "pubdate" -> currentItem.published = textValue//Log.d("PUBDATE", textValue)
                             }
                         }
                         Log.d("PARSE", "ending tag: $tagName")
@@ -150,6 +164,9 @@ class MainViewModel: ViewModel() {
             e.printStackTrace()
             Log.e("PARSER", "ERROR: ${e.message}")
         }
+
+        Log.d("ViewModel PARSER", "$list")
+        return list
     }
 
 }

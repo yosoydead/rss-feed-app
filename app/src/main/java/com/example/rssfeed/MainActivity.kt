@@ -33,40 +33,65 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     private var songs = arrayListOf<Song>()
 
+//    private lateinit var recyclerView: RecyclerView
+//    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+//    private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var adapter: RecyclerViewAdapter
 
     val link = "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/non-explicit.rss"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        recyclerView = findViewById(R.id.my_recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
+
+        adapter = RecyclerViewAdapter(songs)
+        recyclerView.adapter = adapter
+
         Log.d("MAINACTIVITY", "started app")
-        viewManager = LinearLayoutManager(this)
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
+        //viewManager = LinearLayoutManager(this)
         songs.add(Song("blabla", "jbfsdf","19151602"))
         songs.add(Song("n kfwefw", "bfldsfssd", "616216"))
-        viewAdapter = RecyclerViewAdapter(songs)
-        recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply{
-            setHasFixedSize(true)
 
-            // use a linear layout manager
-            layoutManager = viewManager
+        viewModel.songs.observe(this, Observer {
+            //Log.d("View songs","$songs")
+            songs = viewModel.songs.value!!
+            adapter.updateData(songs)
+            //Log.d("VIEW SONGS", "$songs")
+        })
 
-            // specify an viewAdapter (see also next example)
-            adapter = viewAdapter
-        }
+        viewModel.show.observe(this, Observer {
+            loadingPanel.visibility = viewModel.show.value ?: View.VISIBLE
+        })
 
 
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        //viewAdapter = RecyclerViewAdapter(songs)
+
+        //viewAdapter = RecyclerViewAdapter(songs)
+
+//        recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply{
+//            setHasFixedSize(true)
+//
+//            // use a linear layout manager
+//            layoutManager = viewManager
+//
+//            // specify an viewAdapter (see also next example)
+//            adapter = viewAdapter
+//        }
+
+
+
 
 //        viewModel.data.observe(this, Observer<String> {
 //            //textBox.text = viewModel.data.value
 //        })
 
-        viewModel.show.observe(this, Observer {
-            loadingPanel.visibility = viewModel.show.value ?: View.VISIBLE
-        })
+
 
     }
 

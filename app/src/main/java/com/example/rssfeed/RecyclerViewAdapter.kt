@@ -1,5 +1,6 @@
 package com.example.rssfeed
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,12 +29,20 @@ class RecyclerViewAdapter(private var songList: List<Song>): RecyclerView.Adapte
             holder.title.text = songList[position].title
             holder.artist.text = songList[position].artist
             holder.date.text = songList[position].published
+            holder.id.text = "${position +1}"
         }
+    }
+
+    fun updateData(newList: List<Song>){
+        songList = newList
+        notifyDataSetChanged()
+        Log.d("RECYCLERVIEW CHANGED","$newList")
     }
 
     inner class MyViewHolder(view: View):RecyclerView.ViewHolder(view){
         var title: TextView = view.findViewById(R.id.song_title)
         var artist: TextView = view.findViewById(R.id.song_artist)
         var date: TextView = view.findViewById(R.id.song_date)
+        var id: TextView = view.findViewById(R.id.numberId)
     }
 }
