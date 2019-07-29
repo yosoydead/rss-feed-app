@@ -7,7 +7,8 @@
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp">
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp">
 
     <LinearLayout
             android:orientation="vertical"
@@ -44,8 +45,8 @@
                 android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/numberId"
-        tools:text="ID: 5"
-        android:layout_marginLeft="16dp"/>
+                tools:text="ID: 5"
+                android:layout_marginLeft="16dp"/>
 
     </LinearLayout>
 

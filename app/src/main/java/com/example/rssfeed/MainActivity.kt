@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import org.xmlpull.v1.XmlPullParser
@@ -55,8 +57,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
         //viewManager = LinearLayoutManager(this)
-        songs.add(Song("blabla", "jbfsdf","19151602"))
-        songs.add(Song("n kfwefw", "bfldsfssd", "616216"))
+//        songs.add(Song("blabla", "jbfsdf","19151602"))
+//        songs.add(Song("n kfwefw", "bfldsfssd", "616216"))
 
         viewModel.songs.observe(this, Observer {
             //Log.d("View songs","$songs")
@@ -69,6 +71,37 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             loadingPanel.visibility = viewModel.show.value ?: View.VISIBLE
         })
 
+        var currentID = choice_group.checkedChipId
+//        Log.d("VIEW", "currentID: $currentID")
+
+        choice_group.setOnCheckedChangeListener{ group, checkedId ->
+
+            if(checkedId != -1){
+                //Toast.makeText(this, "clicked on ${checkedId}",Toast.LENGTH_SHORT).show()
+
+                currentID = checkedId
+                val chip = group.findViewById<Chip>(currentID)
+
+                Toast.makeText(this,"clicked on: ${chip.text}",Toast.LENGTH_SHORT).show()
+
+            }else{
+                val chip = group.findViewById<Chip>(currentID)
+//
+//                Toast.makeText(this,"clicked again on: ${chip.text}",Toast.LENGTH_SHORT).show()
+                chip.isChecked = true
+            }
+//            val chip = group.findViewById<Chip>(group.checkedChipId)
+//            if(chip != null){
+//                //Toast.makeText(this, "clicked on ${chip.text}",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "clicked on ${group.checkedChipId}",Toast.LENGTH_SHORT).show()
+//            }else{
+//                //Toast.makeText(this, "clicked on null",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "clicked on ${group.checkedChipId}",Toast.LENGTH_SHORT).show()
+//
+//            }
+            //Toast.makeText(this, "clicked on ${currentID}",Toast.LENGTH_SHORT).show()
+
+        }
 
         //viewAdapter = RecyclerViewAdapter(songs)
 
