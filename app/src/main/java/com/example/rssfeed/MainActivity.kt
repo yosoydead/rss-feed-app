@@ -33,75 +33,75 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     private val uiScope = CoroutineScope(Dispatchers.Main + viewJob)
     private lateinit var viewModel: MainViewModel
 
-    private var songs = arrayListOf<Song>()
-
+//    private var songs = arrayListOf<Song>()
+//
+////    private lateinit var recyclerView: RecyclerView
+////    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+////    private lateinit var viewManager: RecyclerView.LayoutManager
 //    private lateinit var recyclerView: RecyclerView
-//    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-//    private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: RecyclerViewAdapter
-
-    val link = "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/non-explicit.rss"
+//    private lateinit var adapter: RecyclerViewAdapter
+//
+//    val link = "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/non-explicit.rss"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recyclerView = findViewById(R.id.my_recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.setHasFixedSize(true)
-
-        adapter = RecyclerViewAdapter(songs)
-        recyclerView.adapter = adapter
-
-        Log.d("MAINACTIVITY", "started app")
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-
-        //viewManager = LinearLayoutManager(this)
-//        songs.add(Song("blabla", "jbfsdf","19151602"))
-//        songs.add(Song("n kfwefw", "bfldsfssd", "616216"))
-
-        viewModel.songs.observe(this, Observer {
-            //Log.d("View songs","$songs")
-            songs = viewModel.songs.value!!
-            adapter.updateData(songs)
-            //Log.d("VIEW SONGS", "$songs")
-        })
-
-        viewModel.show.observe(this, Observer {
-            loadingPanel.visibility = viewModel.show.value ?: View.VISIBLE
-        })
-
-        var currentID = choice_group.checkedChipId
-//        Log.d("VIEW", "currentID: $currentID")
-
-        choice_group.setOnCheckedChangeListener{ group, checkedId ->
-
-            if(checkedId != -1){
-                //Toast.makeText(this, "clicked on ${checkedId}",Toast.LENGTH_SHORT).show()
-
-                currentID = checkedId
-                val chip = group.findViewById<Chip>(currentID)
-
-                Toast.makeText(this,"clicked on: ${chip.text}",Toast.LENGTH_SHORT).show()
-
-            }else{
-                val chip = group.findViewById<Chip>(currentID)
+//        recyclerView = findViewById(R.id.my_recycler_view)
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+//        recyclerView.setHasFixedSize(true)
 //
-//                Toast.makeText(this,"clicked again on: ${chip.text}",Toast.LENGTH_SHORT).show()
-                chip.isChecked = true
-            }
-//            val chip = group.findViewById<Chip>(group.checkedChipId)
-//            if(chip != null){
-//                //Toast.makeText(this, "clicked on ${chip.text}",Toast.LENGTH_SHORT).show()
-//                Toast.makeText(this, "clicked on ${group.checkedChipId}",Toast.LENGTH_SHORT).show()
+//        adapter = RecyclerViewAdapter(songs)
+//        recyclerView.adapter = adapter
+//
+//        Log.d("MAINACTIVITY", "started app")
+//        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+//
+//        //viewManager = LinearLayoutManager(this)
+////        songs.add(Song("blabla", "jbfsdf","19151602"))
+////        songs.add(Song("n kfwefw", "bfldsfssd", "616216"))
+//
+//        viewModel.songs.observe(this, Observer {
+//            //Log.d("View songs","$songs")
+//            songs = viewModel.songs.value!!
+//            adapter.updateData(songs)
+//            //Log.d("VIEW SONGS", "$songs")
+//        })
+//
+//        viewModel.show.observe(this, Observer {
+//            loadingPanel.visibility = viewModel.show.value ?: View.VISIBLE
+//        })
+//
+//        var currentID = choice_group.checkedChipId
+////        Log.d("VIEW", "currentID: $currentID")
+//
+//        choice_group.setOnCheckedChangeListener{ group, checkedId ->
+//
+//            if(checkedId != -1){
+//                //Toast.makeText(this, "clicked on ${checkedId}",Toast.LENGTH_SHORT).show()
+//
+//                currentID = checkedId
+//                val chip = group.findViewById<Chip>(currentID)
+//
+//                Toast.makeText(this,"clicked on: ${chip.text}",Toast.LENGTH_SHORT).show()
+//
 //            }else{
-//                //Toast.makeText(this, "clicked on null",Toast.LENGTH_SHORT).show()
-//                Toast.makeText(this, "clicked on ${group.checkedChipId}",Toast.LENGTH_SHORT).show()
-//
+//                val chip = group.findViewById<Chip>(currentID)
+////
+////                Toast.makeText(this,"clicked again on: ${chip.text}",Toast.LENGTH_SHORT).show()
+//                chip.isChecked = true
 //            }
-            //Toast.makeText(this, "clicked on ${currentID}",Toast.LENGTH_SHORT).show()
-
-        }
+////            val chip = group.findViewById<Chip>(group.checkedChipId)
+////            if(chip != null){
+////                //Toast.makeText(this, "clicked on ${chip.text}",Toast.LENGTH_SHORT).show()
+////                Toast.makeText(this, "clicked on ${group.checkedChipId}",Toast.LENGTH_SHORT).show()
+////            }else{
+////                //Toast.makeText(this, "clicked on null",Toast.LENGTH_SHORT).show()
+////                Toast.makeText(this, "clicked on ${group.checkedChipId}",Toast.LENGTH_SHORT).show()
+////
+////            }
+//            //Toast.makeText(this, "clicked on ${currentID}",Toast.LENGTH_SHORT).show()
+//
+//        }
 
         //viewAdapter = RecyclerViewAdapter(songs)
 
