@@ -80,7 +80,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         bot_nav.setOnNavigationItemSelectedListener{ item ->
             Log.d("MAIN", "clicked on ${item.title}")
             if(item.itemId == currentTab){
-                Log.d("MAIN", "already in tab ${item.title}")
+                //Log.d("MAIN", "already in tab ${item.title}")
+                Toast.makeText(this,"already on tab $item", Toast.LENGTH_SHORT).show()
                 true
             }else{
                 currentTab = item.itemId

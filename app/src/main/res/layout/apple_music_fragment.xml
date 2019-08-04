@@ -4,7 +4,7 @@
                                                    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
     android:id="@+id/musicFragment"
-android:background="@android:color/black">
+    android:background="@android:color/darker_gray">
 
     <TextView
             android:text="apple music fragment"
@@ -15,4 +15,15 @@ android:background="@android:color/black">
             android:layout_marginStart="8dp" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"/>
+
+    <com.google.android.material.button.MaterialButton
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button" android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textView"
+            style="@style/Widget.MaterialComponents.Button"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
