@@ -7,8 +7,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
@@ -32,6 +38,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     private var viewJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewJob)
     private lateinit var viewModel: MainViewModel
+    private  lateinit var navController: NavController
 
 //    private var songs = arrayListOf<Song>()
 //
@@ -42,9 +49,17 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 //    private lateinit var adapter: RecyclerViewAdapter
 //
 //    val link = "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/non-explicit.rss"
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        bot_nav.setupWithNavController(navController)
+        NavigationUI.setupActionBarWithNavController(this, navController)
+
+
 
 //        recyclerView = findViewById(R.id.my_recycler_view)
 //        recyclerView.layoutManager = LinearLayoutManager(this)
@@ -124,8 +139,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 //            //textBox.text = viewModel.data.value
 //        })
 
-
-
     }
+//
+//    override fun onSupportNavigateUp(): Boolean {
+//        return NavigationUI.navigateUp(navController, null)
+//    }
 
 }

@@ -63,13 +63,19 @@
             <!--android:layout_marginEnd="8dp" app:layout_constraintTop_toBottomOf="@id/choice_group"-->
             <!--android:layout_marginTop="8dp"/>-->
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView android:layout_width="match_parent"
-                                                                       android:layout_height="wrap_content"
-                                                                       app:menu="@menu/bottom_navigation"
-                                                                       android:id="@+id/bot_nav"
-                                                                       android:background="?android:attr/windowBackground"
-                                                                       android:layout_alignParentBottom="true"
-    >
+    <fragment android:id="@+id/nav_host_fragment"
+            app:navGraph="@navigation/nav_graph"
+            app:defaultNavHost="true"
+              android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_above="@id/bot_nav"/>
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/bottom_navigation"
+            android:id="@+id/bot_nav"
+            android:background="?android:attr/windowBackground"
+            android:layout_alignParentBottom="true"/>
 </RelativeLayout>

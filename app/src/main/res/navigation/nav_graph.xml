@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/nav_graph" app:startDestination="@id/musicFragment"
+            xmlns:tools="http://schemas.android.com/tools">
+
+    <fragment android:id="@+id/moviesFragment" android:name="com.example.rssfeed.UI.MoviesFragment"
+              android:label="MoviesFragment"
+    tools:layout="@layout/movies_fragment"/>
+
+    <fragment android:id="@+id/musicFragment" android:name="com.example.rssfeed.UI.MusicFragment"
+              android:label="MusicFragment"
+    tools:layout="@layout/apple_music_fragment"/>
+
+    <fragment android:id="@+id/tvShowsFragment" android:name="com.example.rssfeed.UI.TvShowsFragment"
+              android:label="TvShowsFragment"
+    tools:layout="@layout/tv_shows_fragment"/>
+
+</navigation>
