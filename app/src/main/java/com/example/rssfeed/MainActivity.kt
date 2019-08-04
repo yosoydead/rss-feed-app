@@ -57,7 +57,15 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         bot_nav.setupWithNavController(navController)
-        NavigationUI.setupActionBarWithNavController(this, navController)
+
+        //this helps me get rid of the back button shown on the app bar when navigating to other fragments
+        val appBarConfig = AppBarConfiguration.Builder(
+            R.id.musicFragment,
+            R.id.tvShowsFragment,
+            R.id.moviesFragment).build()
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig)
+
+
 
 
 
@@ -141,8 +149,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     }
 //
-//    override fun onSupportNavigateUp(): Boolean {
-//        return NavigationUI.navigateUp(navController, null)
-//    }
+    override fun onSupportNavigateUp(): Boolean {
+        return NavigationUI.navigateUp(navController, null)
+    }
 
 }
