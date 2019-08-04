@@ -1,4 +1,4 @@
-package com.example.rssfeed
+package com.example.rssfeed.Model
 
 data class Song(var title :String =  "",
                 var artist: String = "",

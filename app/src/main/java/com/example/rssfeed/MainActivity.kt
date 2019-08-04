@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rssfeed.Util.GenerateUrl
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_main.*
@@ -65,6 +66,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             R.id.moviesFragment).build()
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig)
 
+        val url = GenerateUrl.generate("books", "top-free", "10")
+        Log.d("MAIN", url)
 
 
 
@@ -148,9 +151,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 //        })
 
     }
-//
-    override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(navController, null)
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        finish()
     }
 
 }
