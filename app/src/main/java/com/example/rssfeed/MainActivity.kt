@@ -3,6 +3,7 @@ package com.example.rssfeed
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -11,12 +12,14 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.Util.GenerateUrl
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import org.xmlpull.v1.XmlPullParser
@@ -57,7 +60,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_main)
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        bot_nav.setupWithNavController(navController)
+
+
+        //bot_nav.setupWithNavController(navController)
+
 
         //this helps me get rid of the back button shown on the app bar when navigating to other fragments
         val appBarConfig = AppBarConfiguration.Builder(
@@ -68,6 +74,19 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         val url = GenerateUrl.generate("books", "top-free", "10")
         Log.d("MAIN", url)
+
+
+        var currentTab = bot_nav.selectedItemId
+        bot_nav.setOnNavigationItemSelectedListener{ item ->
+            Log.d("MAIN", "clicked on ${item.title}")
+            if(item.itemId == currentTab){
+                Log.d("MAIN", "already in tab ${item.title}")
+                true
+            }else{
+                currentTab = item.itemId
+                onNavDestinationSelected(item, navController)
+            }
+        }
 
 
 
