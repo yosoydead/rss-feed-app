@@ -3,37 +3,19 @@ package com.example.rssfeed
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
-import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.Util.GenerateUrl
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.chip.Chip
-import com.google.android.material.navigation.NavigationView
+import com.example.rssfeed.ViewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserFactory
-import java.io.IOException
-import java.io.InputStream
-import java.lang.Exception
-import java.net.HttpURLConnection
-import java.net.MalformedURLException
-import java.net.URL
-import java.net.URLConnection
-import javax.net.ssl.HttpsURLConnection
 import kotlin.coroutines.CoroutineContext
 
+//this is the main activity of the app that hosts a navigation graph and swaps fragments
 class MainActivity : AppCompatActivity(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
@@ -72,7 +54,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             R.id.moviesFragment).build()
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig)
 
-        val url = GenerateUrl.generate("books", "top-free", "10")
+        val url = GenerateUrl.generateATOM("books", "top-free", "10")
         Log.d("MAIN", url)
 
 

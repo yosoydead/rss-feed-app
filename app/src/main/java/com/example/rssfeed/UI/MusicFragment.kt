@@ -13,30 +13,6 @@ import com.example.rssfeed.R
 import kotlinx.android.synthetic.main.apple_music_fragment.view.*
 
 class MusicFragment: Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.apple_music_fragment, container, false)
-
-        view.button.setOnClickListener{
-            Toast.makeText(context, "Clicked on button", Toast.LENGTH_SHORT).show()
-        }
-        return view
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("MUSIC","destroyed")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("MUSIC", "detached")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("MUSIC","view destroyed")
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("MUSIC", "created")
@@ -51,4 +27,39 @@ class MusicFragment: Fragment() {
             return AnimationUtils.loadAnimation(context, R.anim.slide_out_left)
         }
     }
+
+    /*this method is called to draw the ui of the fragment
+      it is not recommended to use findViewById method or similar stuff because it may result in an error
+            because the view could be incomplete
+    */
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.apple_music_fragment, container, false)
+
+        return view
+    }
+
+    //this method is called right after onCreateView so it's a good place to setup listeners and stuff
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.button.setOnClickListener{
+            Toast.makeText(context, "Clicked on button", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        Log.d("MUSIC","destroyed")
+//    }
+//
+//    override fun onDetach() {
+//        super.onDetach()
+//        Log.d("MUSIC", "detached")
+//    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        Log.d("MUSIC","view destroyed")
+//    }
+
 }

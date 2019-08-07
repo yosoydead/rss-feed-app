@@ -1,4 +1,4 @@
-package com.example.rssfeed
+package com.example.rssfeed.ViewModel
 
 import android.util.Log
 import android.view.View
@@ -17,6 +17,14 @@ import java.net.URL
 import java.net.URLConnection
 import javax.net.ssl.HttpsURLConnection
 
+/*
+* ill use a single view model to store the state of each fragment because i dont want to waste resources
+*       creating a view model for each fragment
+*
+* when picking another fragment, that fragment gets destroyed along side its view model if i were to make one
+*
+* this will expose some properties that the fragments can use to communicate and display the needed data
+* */
 class MainViewModel: ViewModel() {
 
     private val scope = CoroutineScope(Dispatchers.Main)
