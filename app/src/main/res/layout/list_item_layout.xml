@@ -47,6 +47,11 @@
                 android:layout_height="wrap_content" android:id="@+id/numberId"
                 tools:text="ID: 5"
                 android:layout_marginLeft="16dp"/>
+        <TextView
+                android:text="ImgUrl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/imgUrl" android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"/>
 
     </LinearLayout>
 

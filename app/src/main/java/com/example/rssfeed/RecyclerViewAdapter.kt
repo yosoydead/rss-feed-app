@@ -18,7 +18,11 @@ class RecyclerViewAdapter(private var songList: List<Song>): RecyclerView.Adapte
     }
 
     override fun getItemCount(): Int {
-        return songList.size ?: 1
+        if(songList.size > 0){
+            return songList.size
+        }else{
+            return 1
+        }
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -29,6 +33,7 @@ class RecyclerViewAdapter(private var songList: List<Song>): RecyclerView.Adapte
             holder.title.text = songList[position].title
             holder.artist.text = songList[position].artist
             holder.date.text = songList[position].published
+            holder.imgUrl.text = songList[position].imgUrl
             holder.id.text = "${position +1}"
         }
     }
@@ -44,5 +49,6 @@ class RecyclerViewAdapter(private var songList: List<Song>): RecyclerView.Adapte
         var artist: TextView = view.findViewById(R.id.song_artist)
         var date: TextView = view.findViewById(R.id.song_date)
         var id: TextView = view.findViewById(R.id.numberId)
+        var imgUrl: TextView = view.findViewById(R.id.imgUrl)
     }
 }

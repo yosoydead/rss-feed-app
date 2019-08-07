@@ -11,7 +11,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.R
+import com.example.rssfeed.RecyclerViewAdapter
 import com.example.rssfeed.Util.GenerateUrl
 import com.example.rssfeed.ViewModel.MainViewModel
 import kotlinx.android.synthetic.main.apple_music_fragment.view.*
@@ -19,6 +22,8 @@ import kotlinx.android.synthetic.main.apple_music_fragment.view.*
 class MusicFragment: Fragment() {
 
     private lateinit var viewModel: MainViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: RecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +48,11 @@ class MusicFragment: Fragment() {
         val view = inflater.inflate(R.layout.apple_music_fragment, container, false)
         viewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
+        //initializing the recycler view
+        recyclerView = view.music_recycler_view
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.setHasFixedSize(true)
+
         return view
     }
 
@@ -50,16 +60,26 @@ class MusicFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.button.setOnClickListener{
-            val link = GenerateUrl.generateATOM("movies","top-movies", "10")
-            Log.d("MUSIC FRAGMENT", "$link")
-            viewModel.setXML(link)
-            Toast.makeText(context, "Clicked on button", Toast.LENGTH_SHORT).show()
-        }
+        adapter = RecyclerViewAdapter(viewModel.songList.value!!)
+        recyclerView.adapter = adapter
+
+        val link = GenerateUrl.generateATOM("apple-music","coming-soon", "25")
+        viewModel.setXML(link)
+
+//        view.button.setOnClickListener{
+//            val link = GenerateUrl.generateATOM("apple-music","coming-soon", "25")
+//            Log.d("MUSIC FRAGMENT", "$link")
+//            viewModel.setXML(link)
+//            Toast.makeText(context, "Clicked on button", Toast.LENGTH_SHORT).show()
+//            Log.d("MUSIC FRAGMENT", "song list: ${viewModel.songList.value}")
+//        }
 
         viewModel.songXML.observe(this, Observer {
-            view.textView.text = viewModel.songXML.value
-            viewModel.parseXML(viewModel.songXML.value!!)
+            viewModel.setSongList(it)
+        })
+
+        viewModel.songList.observe(this, Observer {
+            adapter.updateData(it)
         })
     }
 

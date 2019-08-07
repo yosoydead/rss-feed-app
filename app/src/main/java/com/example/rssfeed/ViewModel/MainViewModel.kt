@@ -34,6 +34,13 @@ class MainViewModel: ViewModel() {
     val songXML: LiveData<String>
         get() = _songXML
 
+    private val _songList = MutableLiveData<ArrayList<Song>>()
+    val songList: LiveData<ArrayList<Song>>
+        get() = _songList
+
+    init {
+        _songList.value = arrayListOf<Song>()
+    }
 //    init {
 //        _songs.value = arrayListOf<Song>()
 //
@@ -59,6 +66,7 @@ class MainViewModel: ViewModel() {
             _songXML.value = withContext(Dispatchers.IO) { downloadXML(urlPath) }
         }
     }
+
     private suspend fun downloadXML(urlPath: String): String{
         val xmlResult = StringBuilder()
 
@@ -110,8 +118,13 @@ class MainViewModel: ViewModel() {
         return ""
     }
 
+    fun setSongList(xmlData: String){
+        uiScope.launch {
+            _songList.value = withContext(Dispatchers.IO){parseXML(xmlData)}
+        }
+    }
 
-    fun parseXML(xmlData: String): ArrayList<Song>?{
+    private suspend fun parseXML(xmlData: String): ArrayList<Song>?{
         var inItem = false
         var textValue = ""
         var list = arrayListOf<Song>()
@@ -122,7 +135,7 @@ class MainViewModel: ViewModel() {
             val xpp = factory.newPullParser()
             xpp.setInput(xmlData.reader())
 
-            //var currentItem = Song()
+            var currentItem = Song()
 
             var eventType = xpp.eventType
             while(eventType != XmlPullParser.END_DOCUMENT){
@@ -139,15 +152,15 @@ class MainViewModel: ViewModel() {
                     XmlPullParser.END_TAG ->{
                         if(inItem){
                             when(tagName){
-                                "item" -> {
-//                                    list?.add(currentItem)
-//                                    inItem = false
-//                                    currentItem = Song()
+                                "entry" -> {
+                                    list.add(currentItem)
+                                    inItem = false
+                                    currentItem = Song()
                                 }
-                                "title" -> Log.d("TITLE", textValue)//currentItem.title = textValue
-                                "category" -> Log.d("CATEGORY", xpp.getAttributeValue(0))
-                                "description"-> Log.d("DESCRIPTION", textValue)//currentItem.artist = textValue//
-                                "pubdate" -> Log.d("PUBDATE", textValue)//currentItem.published = textValue//
+                                "artist" -> currentItem.artist = textValue//Log.d("TITLE", textValue)//currentItem.title = textValue
+                                "name" -> currentItem.title = textValue//Log.d("CATEGORY", xpp.getAttributeValue(0))
+                                "image"-> currentItem.imgUrl = textValue//Log.d("DESCRIPTION", textValue)//currentItem.artist = textValue//
+                                "releasedate" -> currentItem.published = textValue//Log.d("PUBDATE", textValue)//currentItem.published = textValue//
                             }
                         }
                         Log.d("PARSE", "ending tag: $tagName")

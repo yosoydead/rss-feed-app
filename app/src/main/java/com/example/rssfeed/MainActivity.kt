@@ -19,14 +19,6 @@ import kotlin.coroutines.CoroutineContext
 class MainActivity : AppCompatActivity(){
     private  lateinit var navController: NavController
 
-//    private var songs = arrayListOf<Song>()
-//
-////    private lateinit var recyclerView: RecyclerView
-////    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-////    private lateinit var viewManager: RecyclerView.LayoutManager
-//    private lateinit var recyclerView: RecyclerView
-//    private lateinit var adapter: RecyclerViewAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
