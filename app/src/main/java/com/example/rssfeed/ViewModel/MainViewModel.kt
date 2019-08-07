@@ -111,7 +111,7 @@ class MainViewModel: ViewModel() {
     }
 
 
-    private fun parseXML(xmlData: String): ArrayList<Song>?{
+    fun parseXML(xmlData: String): ArrayList<Song>?{
         var inItem = false
         var textValue = ""
         var list = arrayListOf<Song>()
@@ -122,7 +122,7 @@ class MainViewModel: ViewModel() {
             val xpp = factory.newPullParser()
             xpp.setInput(xmlData.reader())
 
-            var currentItem = Song()
+            //var currentItem = Song()
 
             var eventType = xpp.eventType
             while(eventType != XmlPullParser.END_DOCUMENT){
@@ -131,7 +131,7 @@ class MainViewModel: ViewModel() {
                 when(eventType){
                     XmlPullParser.START_TAG -> {
                         Log.d("PARSE", "starting tag: $tagName")
-                        if(tagName == "item"){
+                        if(tagName == "entry"){
                             inItem = true
                         }
                     }
@@ -140,14 +140,14 @@ class MainViewModel: ViewModel() {
                         if(inItem){
                             when(tagName){
                                 "item" -> {
-                                    list?.add(currentItem)
-                                    inItem = false
-                                    currentItem = Song()
+//                                    list?.add(currentItem)
+//                                    inItem = false
+//                                    currentItem = Song()
                                 }
-                                "title" -> currentItem.title = textValue//Log.d("TITLE", textValue)
-                                "category" -> Log.d("CATEGORY", textValue)
-                                "description"-> currentItem.artist = textValue//Log.d("DESCRIPTION", textValue)
-                                "pubdate" -> currentItem.published = textValue//Log.d("PUBDATE", textValue)
+                                "title" -> Log.d("TITLE", textValue)//currentItem.title = textValue
+                                "category" -> Log.d("CATEGORY", xpp.getAttributeValue(0))
+                                "description"-> Log.d("DESCRIPTION", textValue)//currentItem.artist = textValue//
+                                "pubdate" -> Log.d("PUBDATE", textValue)//currentItem.published = textValue//
                             }
                         }
                         Log.d("PARSE", "ending tag: $tagName")

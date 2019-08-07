@@ -59,6 +59,7 @@ class MusicFragment: Fragment() {
 
         viewModel.songXML.observe(this, Observer {
             view.textView.text = viewModel.songXML.value
+            viewModel.parseXML(viewModel.songXML.value!!)
         })
     }
 
