@@ -157,10 +157,10 @@ class MainViewModel: ViewModel() {
                                     inItem = false
                                     currentItem = Song()
                                 }
-                                "artist" -> currentItem.artist = textValue//Log.d("TITLE", textValue)//currentItem.title = textValue
+                                "artist" -> currentItem.artist = "by $textValue"//Log.d("TITLE", textValue)//currentItem.title = textValue
                                 "name" -> currentItem.title = textValue//Log.d("CATEGORY", xpp.getAttributeValue(0))
                                 "image"-> currentItem.imgUrl = textValue//Log.d("DESCRIPTION", textValue)//currentItem.artist = textValue//
-                                "releasedate" -> currentItem.published = textValue//Log.d("PUBDATE", textValue)//currentItem.published = textValue//
+                                "releasedate" -> currentItem.published = "released: $textValue"//Log.d("PUBDATE", textValue)//currentItem.published = textValue//
                             }
                         }
                         Log.d("PARSE", "ending tag: $tagName")

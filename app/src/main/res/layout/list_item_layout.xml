@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -10,10 +10,22 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:srcCompat="@drawable/ph"
+                android:id="@+id/imageView"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="8dp" app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintVertical_bias="0.0"/>
+
 
         <TextView
                 android:layout_width="wrap_content"
@@ -22,37 +34,46 @@
                 android:textStyle="bold"
                 android:textSize="20sp"
                 tools:text="Song Title"
+                android:maxLines="2"
                 android:textColor="@android:color/black"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/song_artist"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" android:layout_marginTop="8dp"/>
         <TextView
                 android:id="@+id/song_artist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 tools:text="by Sepultura"
-                android:layout_marginLeft="16dp"/>
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/song_date" android:textStyle="italic"/>
 
         <TextView
                 android:id="@+id/song_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
                 tools:text="Publishing date"
-                android:layout_marginBottom="16dp"/>
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/imgUrl"/>
         <TextView
                 android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/numberId"
                 tools:text="ID: 5"
-                android:layout_marginLeft="16dp"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView" android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"/>
         <TextView
                 android:text="ImgUrl"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/imgUrl" android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"/>
-
-    </LinearLayout>
+                android:layout_height="wrap_content" android:id="@+id/imgUrl"
+                android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
