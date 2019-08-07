@@ -7,12 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.rssfeed.R
+import kotlinx.android.synthetic.main.apple_music_fragment.view.*
 
 class MusicFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.apple_music_fragment, container, false)
+        val view = inflater.inflate(R.layout.apple_music_fragment, container, false)
+
+        view.button.setOnClickListener{
+            Toast.makeText(context, "Clicked on button", Toast.LENGTH_SHORT).show()
+        }
+        return view
     }
 
     override fun onDestroy() {

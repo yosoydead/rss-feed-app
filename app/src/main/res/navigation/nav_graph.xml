@@ -5,15 +5,15 @@
             xmlns:tools="http://schemas.android.com/tools">
 
     <fragment android:id="@+id/moviesFragment" android:name="com.example.rssfeed.UI.MoviesFragment"
-              android:label="MoviesFragment"
+              android:label="Movies"
               tools:layout="@layout/movies_fragment"/>
 
     <fragment android:id="@+id/musicFragment" android:name="com.example.rssfeed.UI.MusicFragment"
-              android:label="MusicFragment"
-    tools:layout="@layout/apple_music_fragment"/>
+              android:label="Music"
+              tools:layout="@layout/apple_music_fragment"/>
 
     <fragment android:id="@+id/tvShowsFragment" android:name="com.example.rssfeed.UI.TvShowsFragment"
-              android:label="TvShowsFragment"
-    tools:layout="@layout/tv_shows_fragment"/>
+              android:label="TV Shows"
+              tools:layout="@layout/tv_shows_fragment"/>
 
 </navigation>
