@@ -9,10 +9,17 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.rssfeed.R
+import com.example.rssfeed.Util.GenerateUrl
+import com.example.rssfeed.ViewModel.MainViewModel
 import kotlinx.android.synthetic.main.apple_music_fragment.view.*
 
 class MusicFragment: Fragment() {
+
+    private lateinit var viewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("MUSIC", "created")
@@ -34,6 +41,7 @@ class MusicFragment: Fragment() {
     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.apple_music_fragment, container, false)
+        viewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
         return view
     }
@@ -43,8 +51,15 @@ class MusicFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.button.setOnClickListener{
+            val link = GenerateUrl.generateATOM("movies","top-movies", "10")
+            Log.d("MUSIC FRAGMENT", "$link")
+            viewModel.setXML(link)
             Toast.makeText(context, "Clicked on button", Toast.LENGTH_SHORT).show()
         }
+
+        viewModel.songXML.observe(this, Observer {
+            view.textView.text = viewModel.songXML.value
+        })
     }
 
 //    override fun onDestroy() {

@@ -16,14 +16,7 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 //this is the main activity of the app that hosts a navigation graph and swaps fragments
-class MainActivity : AppCompatActivity(), CoroutineScope {
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main
-
-    private var viewJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewJob)
-    private lateinit var viewModel: MainViewModel
+class MainActivity : AppCompatActivity(){
     private  lateinit var navController: NavController
 
 //    private var songs = arrayListOf<Song>()
@@ -33,19 +26,12 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 ////    private lateinit var viewManager: RecyclerView.LayoutManager
 //    private lateinit var recyclerView: RecyclerView
 //    private lateinit var adapter: RecyclerViewAdapter
-//
-//    val link = "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/non-explicit.rss"
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-
-
-        //bot_nav.setupWithNavController(navController)
-
 
         //this helps me get rid of the back button shown on the app bar when navigating to other fragments
         val appBarConfig = AppBarConfiguration.Builder(
@@ -54,10 +40,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             R.id.moviesFragment).build()
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig)
 
-        val url = GenerateUrl.generateATOM("books", "top-free", "10")
-        Log.d("MAIN", url)
-
-
+        //bot_nav.setupWithNavController(navController)
+        //this makes sure the navigation works and that if the same tab is clicked, the fragments is not redrawn
         var currentTab = bot_nav.selectedItemId
         bot_nav.setOnNavigationItemSelectedListener{ item ->
             Log.d("MAIN", "clicked on ${item.title}")
@@ -70,9 +54,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 onNavDestinationSelected(item, navController)
             }
         }
-
-
-
 
 //        recyclerView = findViewById(R.id.my_recycler_view)
 //        recyclerView.layoutManager = LinearLayoutManager(this)
@@ -154,6 +135,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     }
 
+    //if i press back regardless the fragment im in, the app minimizes
     override fun onBackPressed() {
         //super.onBackPressed()
         finish()

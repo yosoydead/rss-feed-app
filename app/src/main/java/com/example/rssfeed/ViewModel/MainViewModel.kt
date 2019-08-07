@@ -1,7 +1,6 @@
 package com.example.rssfeed.ViewModel
 
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import kotlinx.coroutines.*
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.IOException
-import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
@@ -27,42 +25,40 @@ import javax.net.ssl.HttpsURLConnection
 * */
 class MainViewModel: ViewModel() {
 
-    private val scope = CoroutineScope(Dispatchers.Main)
+    //this defines the scope in which a coroutine will be called
+    private val uiScope = CoroutineScope(Dispatchers.Main)
+
     val link = "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/non-explicit.rss"
 
-    private val _show = MutableLiveData<Int>()
-    val show: LiveData<Int>
-        get() = _show
+    private val _songXML = MutableLiveData<String>()
+    val songXML: LiveData<String>
+        get() = _songXML
 
-    private val _data = MutableLiveData<String>()
+//    init {
+//        _songs.value = arrayListOf<Song>()
+//
+//        Log.d("ViewModel", "VIEW MODEL CREATED")
+//        _show.value = View.VISIBLE
+//        scope.launch {
+//            _data.value = async(Dispatchers.IO){
+//                downloadXML(link)
+//            }.await()
+////            launch(Dispatchers.IO){
+////                doStuff()
+////            }
+//
+//            //Log.d("ViewModel data", "${_data.value}")
+//            _songs.value = parseXML(_data.value!!)
+//            Log.d("ViewModel new LIST", "${_songs.value}")
+//            _show.value = View.GONE
+//        }
+//    }
 
-    val data: LiveData<String>
-        get() = _data
-
-    private val _songs = MutableLiveData<ArrayList<Song>>()
-    val songs: LiveData<ArrayList<Song>>
-        get() = _songs
-
-    init {
-        _songs.value = arrayListOf<Song>()
-
-        Log.d("ViewModel", "VIEW MODEL CREATED")
-        _show.value = View.VISIBLE
-        scope.launch {
-            _data.value = async(Dispatchers.IO){
-                downloadXML(link)
-            }.await()
-//            launch(Dispatchers.IO){
-//                doStuff()
-//            }
-
-            //Log.d("ViewModel data", "${_data.value}")
-            _songs.value = parseXML(_data.value!!)
-            Log.d("ViewModel new LIST", "${_songs.value}")
-            _show.value = View.GONE
+    fun setXML(urlPath: String){
+        uiScope.launch {
+            _songXML.value = withContext(Dispatchers.IO) { downloadXML(urlPath) }
         }
     }
-
     private suspend fun downloadXML(urlPath: String): String{
         val xmlResult = StringBuilder()
 
