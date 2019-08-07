@@ -73,6 +73,7 @@ class MusicFragment: Fragment() {
 //            Toast.makeText(context, "Clicked on button", Toast.LENGTH_SHORT).show()
 //            Log.d("MUSIC FRAGMENT", "song list: ${viewModel.songList.value}")
 //        }
+        Toast.makeText(context, "Downloading data", Toast.LENGTH_LONG).show()
 
         viewModel.songXML.observe(this, Observer {
             viewModel.setSongList(it)

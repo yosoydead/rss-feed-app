@@ -4,9 +4,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.Model.Song
+import com.squareup.picasso.Picasso
 
 
 class RecyclerViewAdapter(private var songList: List<Song>): RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>(){
@@ -35,6 +37,11 @@ class RecyclerViewAdapter(private var songList: List<Song>): RecyclerView.Adapte
             holder.date.text = songList[position].published
             holder.imgUrl.text = songList[position].imgUrl
             holder.id.text = "${position +1}"
+
+            Picasso.get().load(songList[position].imgUrl)
+                .error(R.drawable.placeholder)
+                .placeholder(R.drawable.placeholder)
+                .into(holder.thumbnail)
         }
     }
 
@@ -50,5 +57,6 @@ class RecyclerViewAdapter(private var songList: List<Song>): RecyclerView.Adapte
         var date: TextView = view.findViewById(R.id.song_date)
         var id: TextView = view.findViewById(R.id.numberId)
         var imgUrl: TextView = view.findViewById(R.id.imgUrl)
+        var thumbnail: ImageView = view.findViewById(R.id.thumbnail)
     }
 }
