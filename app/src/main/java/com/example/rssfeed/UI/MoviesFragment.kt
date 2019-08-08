@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.R
-import com.example.rssfeed.RV_Adapter.SongsAdapter
+import com.example.rssfeed.RV_Adapter.MoviesAdapter
+import com.example.rssfeed.Util.GenerateUrl
 import com.example.rssfeed.ViewModel.MainViewModel
 import kotlinx.android.synthetic.main.movies_fragment.view.*
 
@@ -20,7 +22,8 @@ class MoviesFragment: Fragment() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: SongsAdapter
+    private lateinit var adapter: MoviesAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.movies_fragment, container, false)
 
@@ -34,10 +37,26 @@ class MoviesFragment: Fragment() {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("MOVIES","destroyed")
+        adapter = MoviesAdapter(viewModel.moviesList.value!!)
+        recyclerView.adapter = adapter
+
+        val link = GenerateUrl.generateATOM("movies","top-movies", "25")
+
+        viewModel.setMoviesXML(link)
+
+        viewModel.moviesXML.observe(this, Observer {
+            viewModel.setMoviesList(it)
+        })
+
+        //if new xml data is parsed and the viewmodel songList changes its size
+        //update the recycler view to have new data in it
+        viewModel.moviesList.observe(this, Observer {
+            adapter.updateData(it)
+        })
+
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
@@ -48,5 +67,10 @@ class MoviesFragment: Fragment() {
         }else{
             return AnimationUtils.loadAnimation(context, R.anim.slide_out_left)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("MOVIES","destroyed")
     }
 }

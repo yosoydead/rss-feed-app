@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.R
 import com.example.rssfeed.RV_Adapter.BooksAdapter
-import com.example.rssfeed.RV_Adapter.SongsAdapter
 import com.example.rssfeed.Util.GenerateUrl
 import com.example.rssfeed.ViewModel.MainViewModel
 import kotlinx.android.synthetic.main.books_fragment.view.*
@@ -46,11 +45,10 @@ class BooksFragment: Fragment() {
         recyclerView.adapter = adapter
 
         val link = GenerateUrl.generateATOM("books","top-paid", "25")
-        viewModel.setbooksXML(link)
+        viewModel.setBooksXML(link)
 
         viewModel.booksXML.observe(this, Observer {
             viewModel.setBooksList(it)
-            //Log.d("MUSIC FRAGM", "xml link: $it")
         })
 
         //if new xml data is parsed and the viewmodel songList changes its size

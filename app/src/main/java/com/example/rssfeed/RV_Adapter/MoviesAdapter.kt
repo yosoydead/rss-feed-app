@@ -7,10 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.Model.Book
+import com.example.rssfeed.Model.Movie
 import com.example.rssfeed.R
 import com.squareup.picasso.Picasso
 
-class BooksAdapter(private var booksList: List<Book>): RecyclerView.Adapter<BooksAdapter.MyViewHolder>(){
+class MoviesAdapter (private var moviesList: List<Movie>): RecyclerView.Adapter<MoviesAdapter.MyViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_layout, parent, false)
@@ -19,33 +20,33 @@ class BooksAdapter(private var booksList: List<Book>): RecyclerView.Adapter<Book
     }
 
     override fun getItemCount(): Int {
-        if(booksList.size > 0){
-            return booksList.size
+        if(moviesList.size > 0){
+            return moviesList.size
         }else{
             return 1
         }
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        if(booksList.isEmpty()){
+        if(moviesList.isEmpty()){
             holder.title.text = "N/A"
             holder.artist.text = "N/A"
         }else{
-            holder.title.text = booksList[position].title
-            holder.artist.text = booksList[position].writer
-            holder.date.text = booksList[position].published
-            holder.imgUrl.text = booksList[position].imgUrl
+            holder.title.text = moviesList[position].title
+            holder.artist.text = moviesList[position].director
+            holder.date.text = moviesList[position].published
+            holder.imgUrl.text = moviesList[position].imgUrl
             holder.id.text = "${position +1}"
 
-            Picasso.get().load(booksList[position].imgUrl)
+            Picasso.get().load(moviesList[position].imgUrl)
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(holder.thumbnail)
         }
     }
 
-    fun updateData(newList: List<Book>){
-        booksList = newList
+    fun updateData(newList: List<Movie>){
+        moviesList = newList
         notifyDataSetChanged()
         //Log.d("RECYCLERVIEW CHANGED","$newList")
     }

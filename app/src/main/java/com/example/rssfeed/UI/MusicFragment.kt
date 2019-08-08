@@ -65,17 +65,8 @@ class MusicFragment: Fragment() {
         val link = GenerateUrl.generateATOM("apple-music","coming-soon", "25")
         viewModel.setSongsXML(link)
 
-//        view.button.setOnClickListener{
-//            val link = GenerateUrl.generateATOM("apple-music","coming-soon", "25")
-//            Log.d("MUSIC FRAGMENT", "$link")
-//            viewModel.setSongsXML(link)
-//            Toast.makeText(context, "Clicked on button", Toast.LENGTH_SHORT).show()
-//            Log.d("MUSIC FRAGMENT", "song list: ${viewModel.songList.value}")
-//        }
-
         viewModel.songsXML.observe(this, Observer {
             viewModel.setSongList(it)
-            //Log.d("MUSIC FRAGM", "xml link: $it")
         })
 
         //if new xml data is parsed and the viewmodel songList changes its size

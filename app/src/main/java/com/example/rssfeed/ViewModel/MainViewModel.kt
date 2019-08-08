@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.rssfeed.Model.Book
+import com.example.rssfeed.Model.Movie
 import com.example.rssfeed.Model.Song
 import com.example.rssfeed.Util.DownloadXML
 import com.example.rssfeed.Util.ParseXML
@@ -56,9 +57,20 @@ class MainViewModel: ViewModel() {
     val booksList: LiveData<ArrayList<Book>>
         get() = _booksList
 
+    private val _moviesLink = MutableLiveData<String>()
+
+    private val _moviesXML = MutableLiveData<String>()
+    val moviesXML: LiveData<String>
+        get() = _moviesXML
+
+    private val _moviesList = MutableLiveData<ArrayList<Movie>>()
+    val moviesList: LiveData<ArrayList<Movie>>
+        get() = _moviesList
+
     init {
         _songsList.value = arrayListOf<Song>()
         _booksList.value = arrayListOf<Book>()
+        _moviesList.value = arrayListOf<Movie>()
     }
 
     //this function is called when a new xml link is generated and then
@@ -83,7 +95,7 @@ class MainViewModel: ViewModel() {
         }
     }
 
-    fun setbooksXML(urlPath: String){
+    fun setBooksXML(urlPath: String){
         if(urlPath != _booksLink.value){
             uiScope.launch {
                 _booksXML.value = withContext(Dispatchers.IO) { DownloadXML.downloadXML(urlPath) }
@@ -97,6 +109,23 @@ class MainViewModel: ViewModel() {
     fun setBooksList(xmlData: String){
         uiScope.launch {
             _booksList.value = withContext(Dispatchers.IO){ ParseXML.booksList(xmlData) }
+        }
+    }
+
+    fun setMoviesXML(urlPath: String){
+        if(urlPath != _moviesLink.value){
+            uiScope.launch {
+                _moviesXML.value = withContext(Dispatchers.IO) { DownloadXML.downloadXML(urlPath) }
+            }
+            _moviesLink.value = urlPath
+        }else{
+            Log.d("VIEWMODEL","same songs link. Not Downloading")
+        }
+    }
+
+    fun setMoviesList(xmlData: String){
+        uiScope.launch {
+            _moviesList.value = withContext(Dispatchers.IO){ ParseXML.moviesList(xmlData) }
         }
     }
 }
