@@ -1,18 +1,16 @@
 package com.example.rssfeed.RV_Adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rssfeed.Model.Song
+import com.example.rssfeed.Model.Book
 import com.example.rssfeed.R
 import com.squareup.picasso.Picasso
 
-
-class RecyclerViewAdapter(private var songList: List<Song>): RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>(){
+class BooksAdapter(private var songList: List<Book>): RecyclerView.Adapter<BooksAdapter.MyViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_layout, parent, false)
@@ -34,7 +32,7 @@ class RecyclerViewAdapter(private var songList: List<Song>): RecyclerView.Adapte
             holder.artist.text = "N/A"
         }else{
             holder.title.text = songList[position].title
-            holder.artist.text = songList[position].artist
+            holder.artist.text = songList[position].writer
             holder.date.text = songList[position].published
             holder.imgUrl.text = songList[position].imgUrl
             holder.id.text = "${position +1}"
@@ -46,13 +44,13 @@ class RecyclerViewAdapter(private var songList: List<Song>): RecyclerView.Adapte
         }
     }
 
-    fun updateData(newList: List<Song>){
+    fun updateData(newList: List<Book>){
         songList = newList
         notifyDataSetChanged()
         //Log.d("RECYCLERVIEW CHANGED","$newList")
     }
 
-    inner class MyViewHolder(view: View):RecyclerView.ViewHolder(view){
+    inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view){
         var title: TextView = view.findViewById(R.id.song_title)
         var artist: TextView = view.findViewById(R.id.song_artist)
         var date: TextView = view.findViewById(R.id.song_date)

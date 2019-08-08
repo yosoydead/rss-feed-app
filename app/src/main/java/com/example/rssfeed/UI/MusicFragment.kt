@@ -7,14 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.R
-import com.example.rssfeed.RV_Adapter.RecyclerViewAdapter
+import com.example.rssfeed.RV_Adapter.SongsAdapter
 import com.example.rssfeed.Util.GenerateUrl
 import com.example.rssfeed.ViewModel.MainViewModel
 import kotlinx.android.synthetic.main.apple_music_fragment.view.*
@@ -23,7 +22,7 @@ class MusicFragment: Fragment() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: RecyclerViewAdapter
+    private lateinit var adapter: SongsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,16 +59,16 @@ class MusicFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = RecyclerViewAdapter(viewModel.songsList.value!!)
+        adapter = SongsAdapter(viewModel.songsList.value!!)
         recyclerView.adapter = adapter
 
         val link = GenerateUrl.generateATOM("apple-music","coming-soon", "25")
-        viewModel.setXML(link)
+        viewModel.setSongsXML(link)
 
 //        view.button.setOnClickListener{
 //            val link = GenerateUrl.generateATOM("apple-music","coming-soon", "25")
 //            Log.d("MUSIC FRAGMENT", "$link")
-//            viewModel.setXML(link)
+//            viewModel.setSongsXML(link)
 //            Toast.makeText(context, "Clicked on button", Toast.LENGTH_SHORT).show()
 //            Log.d("MUSIC FRAGMENT", "song list: ${viewModel.songList.value}")
 //        }

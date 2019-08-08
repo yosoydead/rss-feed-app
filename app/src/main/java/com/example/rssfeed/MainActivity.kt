@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(){
 //        recyclerView.layoutManager = LinearLayoutManager(this)
 //        recyclerView.setHasFixedSize(true)
 //
-//        adapter = RecyclerViewAdapter(songs)
+//        adapter = SongsAdapter(songs)
 //        recyclerView.adapter = adapter
 //
 //        Log.d("MAINACTIVITY", "started app")
@@ -100,9 +100,9 @@ class MainActivity : AppCompatActivity(){
 //
 //        }
 
-        //viewAdapter = RecyclerViewAdapter(songs)
+        //viewAdapter = SongsAdapter(songs)
 
-        //viewAdapter = RecyclerViewAdapter(songs)
+        //viewAdapter = SongsAdapter(songs)
 
 //        recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply{
 //            setHasFixedSize(true)

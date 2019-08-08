@@ -8,20 +8,22 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.R
-import com.example.rssfeed.RV_Adapter.RecyclerViewAdapter
+import com.example.rssfeed.RV_Adapter.BooksAdapter
+import com.example.rssfeed.RV_Adapter.SongsAdapter
 import com.example.rssfeed.Util.GenerateUrl
 import com.example.rssfeed.ViewModel.MainViewModel
-import kotlinx.android.synthetic.main.apple_music_fragment.view.*
+import kotlinx.android.synthetic.main.books_fragment.view.*
 
 class BooksFragment: Fragment() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: RecyclerViewAdapter
+    private lateinit var adapter: BooksAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -30,9 +32,9 @@ class BooksFragment: Fragment() {
         viewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
         //initializing the recycler view
-//        recyclerView = view.music_recycler_view
-//        recyclerView.layoutManager = LinearLayoutManager(context)
-//        recyclerView.setHasFixedSize(true)
+        recyclerView = view.books_recycler_view
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.setHasFixedSize(true)
 
         return view
     }
@@ -40,8 +42,22 @@ class BooksFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val link = GenerateUrl.generateATOM("tv-shows","top-tv-seasons", "25")
+        adapter = BooksAdapter(viewModel.booksList.value!!)
+        recyclerView.adapter = adapter
 
+        val link = GenerateUrl.generateATOM("books","top-paid", "25")
+        viewModel.setbooksXML(link)
+
+        viewModel.booksXML.observe(this, Observer {
+            viewModel.setBooksList(it)
+            //Log.d("MUSIC FRAGM", "xml link: $it")
+        })
+
+        //if new xml data is parsed and the viewmodel songList changes its size
+        //update the recycler view to have new data in it
+        viewModel.booksList.observe(this, Observer {
+            adapter.updateData(it)
+        })
     }
 
 
