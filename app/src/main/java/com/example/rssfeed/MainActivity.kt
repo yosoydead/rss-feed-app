@@ -9,11 +9,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
-import com.example.rssfeed.Util.GenerateUrl
-import com.example.rssfeed.ViewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
 
 //this is the main activity of the app that hosts a navigation graph and swaps fragments
 class MainActivity : AppCompatActivity(){
@@ -28,7 +24,7 @@ class MainActivity : AppCompatActivity(){
         //this helps me get rid of the back button shown on the app bar when navigating to other fragments
         val appBarConfig = AppBarConfiguration.Builder(
             R.id.musicFragment,
-            R.id.tvShowsFragment,
+            R.id.booksFragment,
             R.id.moviesFragment).build()
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig)
 

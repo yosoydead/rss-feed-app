@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.R
-import com.example.rssfeed.RecyclerViewAdapter
+import com.example.rssfeed.RV_Adapter.RecyclerViewAdapter
 import com.example.rssfeed.Util.GenerateUrl
 import com.example.rssfeed.ViewModel.MainViewModel
 import kotlinx.android.synthetic.main.apple_music_fragment.view.*
@@ -60,7 +60,7 @@ class MusicFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = RecyclerViewAdapter(viewModel.songList.value!!)
+        adapter = RecyclerViewAdapter(viewModel.songsList.value!!)
         recyclerView.adapter = adapter
 
         val link = GenerateUrl.generateATOM("apple-music","coming-soon", "25")
@@ -73,13 +73,15 @@ class MusicFragment: Fragment() {
 //            Toast.makeText(context, "Clicked on button", Toast.LENGTH_SHORT).show()
 //            Log.d("MUSIC FRAGMENT", "song list: ${viewModel.songList.value}")
 //        }
-        Toast.makeText(context, "Downloading data", Toast.LENGTH_LONG).show()
 
-        viewModel.songXML.observe(this, Observer {
+        viewModel.songsXML.observe(this, Observer {
             viewModel.setSongList(it)
+            //Log.d("MUSIC FRAGM", "xml link: $it")
         })
 
-        viewModel.songList.observe(this, Observer {
+        //if new xml data is parsed and the viewmodel songList changes its size
+        //update the recycler view to have new data in it
+        viewModel.songsList.observe(this, Observer {
             adapter.updateData(it)
         })
     }

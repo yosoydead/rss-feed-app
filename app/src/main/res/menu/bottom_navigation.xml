@@ -4,12 +4,12 @@
             android:icon="@drawable/ic_audiotrack_black_24dp"
             android:title="Apple Music"/>
 
-    <item android:id="@+id/tvShowsFragment"
-          android:icon="@drawable/ic_live_tv_black_24dp"
-          android:title="TV Shows"/>
-
     <item android:id="@+id/moviesFragment"
           android:icon="@drawable/ic_movie_black_24dp"
           android:title="Movies"/>
+
+    <item android:id="@+id/booksFragment"
+          android:icon="@drawable/ic_book_black_24dp"
+          android:title="Books"/>
 
 </menu>

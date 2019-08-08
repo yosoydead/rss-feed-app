@@ -1,6 +1,7 @@
 package com.example.rssfeed.ViewModel
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,62 +26,65 @@ import javax.net.ssl.HttpsURLConnection
 * */
 class MainViewModel: ViewModel() {
 
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("VIEWMODEL", "cleared")
+    }
     //this defines the scope in which a coroutine will be called
     private val uiScope = CoroutineScope(Dispatchers.Main)
 
-    val link = "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/non-explicit.rss"
+    //val link = "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/non-explicit.rss"
+    private val _songsLink = MutableLiveData<String>()
 
-    private val _songXML = MutableLiveData<String>()
-    val songXML: LiveData<String>
-        get() = _songXML
+    private val _songsXML = MutableLiveData<String>()
+    val songsXML: LiveData<String>
+        get() = _songsXML
 
-    private val _songList = MutableLiveData<ArrayList<Song>>()
-    val songList: LiveData<ArrayList<Song>>
-        get() = _songList
+    private val _songsList = MutableLiveData<ArrayList<Song>>()
+    val songsList: LiveData<ArrayList<Song>>
+        get() = _songsList
+
+    private val _tvShowsLink = MutableLiveData<String>()
+
+    private val _tvShowsXML = MutableLiveData<String>()
+    val tvShowsXML: LiveData<String>
+        get() = _tvShowsXML
+
+    private val _tvShowsList = MutableLiveData<ArrayList<Song>>()
+    val tvShowsList: LiveData<ArrayList<Song>>
+        get() = _tvShowsList
 
     init {
-        _songList.value = arrayListOf<Song>()
+        _songsList.value = arrayListOf<Song>()
     }
-//    init {
-//        _songs.value = arrayListOf<Song>()
-//
-//        Log.d("ViewModel", "VIEW MODEL CREATED")
-//        _show.value = View.VISIBLE
-//        scope.launch {
-//            _data.value = async(Dispatchers.IO){
-//                downloadXML(link)
-//            }.await()
-////            launch(Dispatchers.IO){
-////                doStuff()
-////            }
-//
-//            //Log.d("ViewModel data", "${_data.value}")
-//            _songs.value = parseXML(_data.value!!)
-//            Log.d("ViewModel new LIST", "${_songs.value}")
-//            _show.value = View.GONE
-//        }
-//    }
 
+    //this function is called when a new xml link is generated and then
+    //download that xml source in the background
     fun setXML(urlPath: String){
-        uiScope.launch {
-            _songXML.value = withContext(Dispatchers.IO) { downloadXML(urlPath) }
+        if(urlPath != _songsLink.value){
+            Log.d("VIEWMODEL", "urlPath: $urlPath")
+            Log.d("VIEWMODEL", "_songLink: ${_songsLink.value}")
+            uiScope.launch {
+                _songsXML.value = withContext(Dispatchers.IO) { downloadXML(urlPath) }
+            }
+            _songsLink.value = urlPath
+        }else{
+            Log.d("VIEWMODEL","same songs link. Not Downloading")
         }
     }
 
+    //this method is called whenever the xml string is downloaded and needs parsing
+    fun setSongList(xmlData: String){
+        uiScope.launch {
+            _songsList.value = withContext(Dispatchers.IO){parseXML(xmlData)}
+        }
+    }
+
+    //downloads the xml string from the internet
     private suspend fun downloadXML(urlPath: String): String{
         val xmlResult = StringBuilder()
 
         try {
-//            val url = URL(urlPath)
-//
-//            val connection: HttpsURLConnection = url.openConnection() as HttpsURLConnection
-//
-//            val response = connection.responseCode
-//            Log.i("Response code", response.toString())
-//
-//            connection.inputStream.buffered().reader().use {
-//                reader -> xmlResult.append(reader.readText())
-//            }
             val url = URL(urlPath)
 
             val urlConn: URLConnection = url.openConnection()
@@ -100,7 +104,6 @@ class MainViewModel: ViewModel() {
                 }
 
             }
-            //Log.d("DOWNLOAD", xmlResult.toString())
             delay(3000)
             return xmlResult.toString()
         }catch (e: Exception){
@@ -118,12 +121,8 @@ class MainViewModel: ViewModel() {
         return ""
     }
 
-    fun setSongList(xmlData: String){
-        uiScope.launch {
-            _songList.value = withContext(Dispatchers.IO){parseXML(xmlData)}
-        }
-    }
-
+    //parses the xml received and returns an arrayList full of song objects
+    //if the xml string is not null
     private suspend fun parseXML(xmlData: String): ArrayList<Song>?{
         var inItem = false
         var textValue = ""
@@ -143,7 +142,7 @@ class MainViewModel: ViewModel() {
 
                 when(eventType){
                     XmlPullParser.START_TAG -> {
-                        Log.d("PARSE", "starting tag: $tagName")
+                        //Log.d("PARSE", "starting tag: $tagName")
                         if(tagName == "entry"){
                             inItem = true
                         }
@@ -163,19 +162,9 @@ class MainViewModel: ViewModel() {
                                 "releasedate" -> currentItem.published = "released: $textValue"//Log.d("PUBDATE", textValue)//currentItem.published = textValue//
                             }
                         }
-                        Log.d("PARSE", "ending tag: $tagName")
+                        //Log.d("PARSE", "ending tag: $tagName")
                     }
                 }
-//                if(eventType == XmlPullParser.START_DOCUMENT){
-//                    Log.d("PARSER", "started document")
-//                }else if(eventType ==XmlPullParser.START_TAG){
-//                    Log.d("PARSER", "TAG START: $tagName")
-//                }else if(eventType == XmlPullParser.END_TAG){
-//                    Log.d("PARSER", "TAG END: $tagName")
-//                }else if(eventType == XmlPullParser.TEXT){
-//                    Log.d("PARSER", "TEXT: ${xpp.text}")
-//                }
-
                 eventType = xpp.next()
             }
         }catch(e: Exception){
@@ -183,7 +172,7 @@ class MainViewModel: ViewModel() {
             Log.e("PARSER", "ERROR: ${e.message}")
         }
 
-        Log.d("ViewModel PARSER", "$list")
+        //Log.d("ViewModel PARSER", "$list")
         return list
     }
 

@@ -12,8 +12,8 @@
               android:label="Music"
               tools:layout="@layout/apple_music_fragment"/>
 
-    <fragment android:id="@+id/tvShowsFragment" android:name="com.example.rssfeed.UI.TvShowsFragment"
-              android:label="TV Shows"
-              tools:layout="@layout/tv_shows_fragment"/>
+    <fragment android:id="@+id/booksFragment" android:name="com.example.rssfeed.UI.BooksFragment"
+              android:label="Books"
+              tools:layout="@layout/books_fragment"/>
 
 </navigation>

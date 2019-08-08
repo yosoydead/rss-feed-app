@@ -1,4 +1,4 @@
-package com.example.rssfeed
+package com.example.rssfeed.RV_Adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.Model.Song
+import com.example.rssfeed.R
 import com.squareup.picasso.Picasso
 
 
@@ -48,7 +49,7 @@ class RecyclerViewAdapter(private var songList: List<Song>): RecyclerView.Adapte
     fun updateData(newList: List<Song>){
         songList = newList
         notifyDataSetChanged()
-        Log.d("RECYCLERVIEW CHANGED","$newList")
+        //Log.d("RECYCLERVIEW CHANGED","$newList")
     }
 
     inner class MyViewHolder(view: View):RecyclerView.ViewHolder(view){
