@@ -43,7 +43,7 @@ object ParseXML {
                                     inItem = false
                                     currentItem = Song()
                                 }
-                                "artist" -> currentItem.artist = "By: $textValue"//Log.d("TITLE", textValue)//currentItem.title = textValue
+                                "artist" -> currentItem.artist = "$textValue"//Log.d("TITLE", textValue)//currentItem.title = textValue
                                 "name" -> currentItem.title = textValue//Log.d("CATEGORY", xpp.getAttributeValue(0))
                                 "image"-> currentItem.imgUrl = textValue//Log.d("DESCRIPTION", textValue)//currentItem.artist = textValue//
                                 "releasedate" -> currentItem.published = "released: $textValue"//Log.d("PUBDATE", textValue)//currentItem.published = textValue//
@@ -96,7 +96,7 @@ object ParseXML {
                                     inItem = false
                                     currentItem = Book()
                                 }
-                                "artist" -> currentItem.writer = "Written by: $textValue"//Log.d("TITLE", textValue)//currentItem.title = textValue
+                                "artist" -> currentItem.writer = "$textValue"//Log.d("TITLE", textValue)//currentItem.title = textValue
                                 "name" -> currentItem.title = textValue//Log.d("CATEGORY", xpp.getAttributeValue(0))
                                 "image"-> currentItem.imgUrl = textValue//Log.d("DESCRIPTION", textValue)//currentItem.artist = textValue//
                                 "releasedate" -> currentItem.published = "released: $textValue"//Log.d("PUBDATE", textValue)//currentItem.published = textValue//
@@ -149,7 +149,7 @@ object ParseXML {
                                     inItem = false
                                     currentItem = Movie()
                                 }
-                                "artist" -> currentItem.director = "Directed by: $textValue"//Log.d("TITLE", textValue)//currentItem.title = textValue
+                                "artist" -> currentItem.director = "$textValue"//Log.d("TITLE", textValue)//currentItem.title = textValue
                                 "name" -> currentItem.title = textValue//Log.d("CATEGORY", xpp.getAttributeValue(0))
                                 "image"-> currentItem.imgUrl = textValue//Log.d("DESCRIPTION", textValue)//currentItem.artist = textValue//
                                 "releasedate" -> currentItem.published = "released: $textValue"//Log.d("PUBDATE", textValue)//currentItem.published = textValue//

@@ -1,5 +1,6 @@
 package com.example.rssfeed.UI
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.R
@@ -89,6 +91,12 @@ class MusicFragment: Fragment(),RecyclerItemClickListener.OnRecyclerClickListene
         Log.d("MUSIC", "onItemLongClick starts")
 
         val song = adapter.getSong(position)
+
+        //create an intent to navigate to song details with context and class
+        val intent = Intent(context, MusicDetailsActivity::class.java)
+        intent.putExtra("TITLE","${song?.title}")
+        intent.putExtra("ARTIST", "${song?.artist}")
+        startActivity(intent)
         //Toast.makeText(context, "Long tap at position $position", Toast.LENGTH_SHORT).show()
         Toast.makeText(context, "Long tap on ${song?.artist}", Toast.LENGTH_SHORT).show()
     }

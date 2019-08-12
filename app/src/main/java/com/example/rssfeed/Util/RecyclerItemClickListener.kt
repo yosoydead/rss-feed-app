@@ -32,7 +32,7 @@ class RecyclerItemClickListener (context: Context, recyclerView: RecyclerView, p
 
     //asta se activeaza la fiecare atingere, swipe, etc
      override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-        Log.d("RECYCLER Click listener", "OnInterceptTouchEvent starts: $e")
+        //Log.d("RECYCLER Click listener", "OnInterceptTouchEvent starts: $e")
 
         val result = gestureDetector.onTouchEvent(e)
         return result
