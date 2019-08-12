@@ -44,6 +44,10 @@ class BooksAdapter(private var booksList: List<Book>): RecyclerView.Adapter<Book
         }
     }
 
+    fun getBook(position: Int): Book?{
+        return if(booksList.isNotEmpty()) booksList[position] else null
+    }
+
     fun updateData(newList: List<Book>){
         booksList = newList
         notifyDataSetChanged()

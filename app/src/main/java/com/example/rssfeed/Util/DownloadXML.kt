@@ -1,7 +1,6 @@
 package com.example.rssfeed.Util
 
 import android.util.Log
-import kotlinx.coroutines.delay
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
@@ -35,7 +34,6 @@ object DownloadXML {
                 }
 
             }
-            delay(3000)
             return xmlResult.toString()
         }catch (e: Exception){
 

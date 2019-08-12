@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,10 +16,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.R
 import com.example.rssfeed.RV_Adapter.SongsAdapter
 import com.example.rssfeed.Util.GenerateUrl
+import com.example.rssfeed.Util.RecyclerItemClickListener
 import com.example.rssfeed.ViewModel.MainViewModel
 import kotlinx.android.synthetic.main.apple_music_fragment.view.*
 
-class MusicFragment: Fragment() {
+class MusicFragment: Fragment(),RecyclerItemClickListener.OnRecyclerClickListener {
+
 
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
@@ -60,6 +63,7 @@ class MusicFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = SongsAdapter(viewModel.songsList.value!!)
+        recyclerView.addOnItemTouchListener(RecyclerItemClickListener(context!!, recyclerView, this))
         recyclerView.adapter = adapter
 
         val link = GenerateUrl.generateATOM("apple-music","coming-soon", "25")
@@ -74,6 +78,19 @@ class MusicFragment: Fragment() {
         viewModel.songsList.observe(this, Observer {
             adapter.updateData(it)
         })
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        Log.d("MUSIC","onItemClick starts")
+        Toast.makeText(context, "Normal tap at position $position", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onItemLongClick(view: View, position: Int) {
+        Log.d("MUSIC", "onItemLongClick starts")
+
+        val song = adapter.getSong(position)
+        //Toast.makeText(context, "Long tap at position $position", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Long tap on ${song?.artist}", Toast.LENGTH_SHORT).show()
     }
 
 //    override fun onDestroy() {

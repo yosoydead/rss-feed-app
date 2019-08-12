@@ -45,6 +45,10 @@ class MoviesAdapter (private var moviesList: List<Movie>): RecyclerView.Adapter<
         }
     }
 
+    fun getMovie(position: Int): Movie?{
+        return if(moviesList.isNotEmpty()) moviesList[position] else null
+    }
+
     fun updateData(newList: List<Movie>){
         moviesList = newList
         notifyDataSetChanged()

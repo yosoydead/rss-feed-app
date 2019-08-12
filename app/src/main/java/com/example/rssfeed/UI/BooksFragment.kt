@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,10 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeed.R
 import com.example.rssfeed.RV_Adapter.BooksAdapter
 import com.example.rssfeed.Util.GenerateUrl
+import com.example.rssfeed.Util.RecyclerItemClickListener
 import com.example.rssfeed.ViewModel.MainViewModel
 import kotlinx.android.synthetic.main.books_fragment.view.*
 
-class BooksFragment: Fragment() {
+class BooksFragment: Fragment(), RecyclerItemClickListener.OnRecyclerClickListener  {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
@@ -42,6 +44,7 @@ class BooksFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = BooksAdapter(viewModel.booksList.value!!)
+        recyclerView.addOnItemTouchListener(RecyclerItemClickListener(context!!, recyclerView, this))
         recyclerView.adapter = adapter
 
         val link = GenerateUrl.generateATOM("books","top-paid", "25")
@@ -67,6 +70,19 @@ class BooksFragment: Fragment() {
         }else{
             return AnimationUtils.loadAnimation(context, R.anim.slide_out_left)
         }
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        Log.d("MUSIC","onItemClick starts")
+        Toast.makeText(context, "Normal tap at position $position", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onItemLongClick(view: View, position: Int) {
+        Log.d("MUSIC", "onItemLongClick starts")
+        val book= adapter.getBook(position)
+        //Toast.makeText(context, "Long tap at position $position", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Long tap on ${book?.writer}", Toast.LENGTH_SHORT).show()
+
     }
 
 

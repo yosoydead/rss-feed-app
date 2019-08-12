@@ -45,6 +45,10 @@ class SongsAdapter(private var songList: List<Song>): RecyclerView.Adapter<Songs
         }
     }
 
+    fun getSong(position: Int): Song?{
+        return if(songList.isNotEmpty()) songList[position] else null
+    }
+
     fun updateData(newList: List<Song>){
         songList = newList
         notifyDataSetChanged()
