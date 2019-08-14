@@ -33,6 +33,11 @@ class MainViewModel: ViewModel() {
         super.onCleared()
         Log.d("VIEWMODEL", "cleared")
     }
+
+    val _screenHeight = MutableLiveData<Float>()
+//    val screenHeight: LiveData<Float>
+//        get() = _screenHeight
+
     //this defines the scope in which a coroutine will be called
     private val uiScope = CoroutineScope(Dispatchers.Main)
 

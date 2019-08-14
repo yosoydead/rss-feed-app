@@ -76,6 +76,9 @@
             android:layout_height="wrap_content"
             app:menu="@menu/bottom_navigation"
             android:id="@+id/bot_nav"
-            android:background="?android:attr/windowBackground"
+            android:background="@color/colorPrimary"
+            app:itemIconTint="@color/colorOnPrimary"
+            app:itemTextColor="@color/colorOnPrimary"
+            app:labelVisibilityMode="selected"
             android:layout_alignParentBottom="true"/>
 </RelativeLayout>

@@ -11,10 +11,17 @@ import com.example.rssfeed.R
 import com.squareup.picasso.Picasso
 
 
-class SongsAdapter(private var songList: List<Song>): RecyclerView.Adapter<SongsAdapter.MyViewHolder>(){
+class SongsAdapter(private var screenHeight: Float,
+                   private var songList: List<Song>): RecyclerView.Adapter<SongsAdapter.MyViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_layout, parent, false)
+        var view: View
+
+        if(screenHeight > 400){
+            view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_layout, parent, false)
+        }else{
+            view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_layout_small, parent, false)
+        }
 
         return MyViewHolder(view)
     }

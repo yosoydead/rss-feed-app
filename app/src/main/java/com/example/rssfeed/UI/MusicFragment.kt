@@ -19,10 +19,12 @@ import com.example.rssfeed.R
 import com.example.rssfeed.RV_Adapter.SongsAdapter
 import com.example.rssfeed.Util.GenerateUrl
 import com.example.rssfeed.Util.RecyclerItemClickListener
+import com.example.rssfeed.Util.ScreenUtility
 import com.example.rssfeed.ViewModel.MainViewModel
 import kotlinx.android.synthetic.main.apple_music_fragment.view.*
 
-class MusicFragment: Fragment(),RecyclerItemClickListener.OnRecyclerClickListener {
+class MusicFragment: Fragment(),
+    RecyclerItemClickListener.OnRecyclerClickListener {
 
 
     private lateinit var viewModel: MainViewModel
@@ -32,6 +34,7 @@ class MusicFragment: Fragment(),RecyclerItemClickListener.OnRecyclerClickListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("MUSIC", "created")
+        //Log.d("MUSIC", "orientation is ${context!!.resources.configuration.orientation}")
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
@@ -64,7 +67,7 @@ class MusicFragment: Fragment(),RecyclerItemClickListener.OnRecyclerClickListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = SongsAdapter(viewModel.songsList.value!!)
+        adapter = SongsAdapter(viewModel._screenHeight.value!!,viewModel.songsList.value!!)
         recyclerView.addOnItemTouchListener(RecyclerItemClickListener(context!!, recyclerView, this))
         recyclerView.adapter = adapter
 

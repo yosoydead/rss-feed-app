@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
+import com.example.rssfeed.Util.ScreenUtility
+import com.example.rssfeed.ViewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 //this is the main activity of the app that hosts a navigation graph and swaps fragments
@@ -18,6 +21,19 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //Toast.makeText(this, "orientation is ${applicationContext.resources.configuration.orientation}",
+            //Toast.LENGTH_LONG).show()
+
+        val su = ScreenUtility(this)
+        val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        if(this.resources.configuration.orientation == 1){
+            viewModel._screenHeight.value = su.getDpHeight()
+        }else{
+            viewModel._screenHeight.value = su.getDpWidth()
+        }
+        Log.d("MAIN","screen height is ${viewModel._screenHeight.value}")
+        //Toast.makeText(this, "device w:${su.getDpWidth()}, h:${su.getDpHeight()}",
+            //Toast.LENGTH_LONG).show()
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
 
